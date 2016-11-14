@@ -108,7 +108,7 @@ namespace DotNetCasClient.Validation.TicketValidator
 
             // parse Assertion element out of SAML response from CAS
             CasSaml11Response casSaml11Response = new CasSaml11Response(response, CasAuthentication.TicketTimeTolerance);
-            
+
             if (casSaml11Response.HasCasSamlAssertion)
             {
                 protoLogger.Debug("Valid Assertion found: " + casSaml11Response.CasPrincipal.Assertion);
@@ -183,26 +183,31 @@ namespace DotNetCasClient.Validation.TicketValidator
             }
             */
 
+            string requestId = Guid.NewGuid().ToString();// new Guid().ToString();
+            string issueInstant = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffK");
+
             StringBuilder messageBuilder = new StringBuilder();
             messageBuilder.AppendLine(@"<SOAP-ENV:Envelope xmlns:SOAP-ENV=""http://schemas.xmlsoap.org/soap/envelope/"">");
             messageBuilder.AppendLine(@"<SOAP-ENV:Header/><SOAP-ENV:Body>");
             messageBuilder.AppendLine(@"<samlp:Request xmlns:samlp=""urn:oasis:names:tc:SAML:1.0:protocol"" ");
-            messageBuilder.AppendLine(@"MajorVersion=""1"" MinorVersion=""1"" RequestID=""_192.168.16.51.1024506224022"" ");
-            messageBuilder.AppendLine(@"IssueInstant=""2002-06-19T17:03:44.022Z"">");
+            //messageBuilder.AppendLine(@"MajorVersion=""1"" MinorVersion=""1"" RequestID=""_192.168.16.51.1024506224022"" ");
+            //messageBuilder.AppendLine(@"IssueInstant=""2002-06-19T17:03:44.022Z"">");
+            messageBuilder.AppendLine(@"MajorVersion=""1"" MinorVersion=""1"" RequestID=""" + requestId + @""" ");
+            messageBuilder.AppendLine(@"IssueInstant=""" + issueInstant + @""">");
             messageBuilder.AppendLine(@"<samlp:AssertionArtifact>" + ticket);
             messageBuilder.AppendLine(@"</samlp:AssertionArtifact></samlp:Request></SOAP-ENV:Body></SOAP-ENV:Envelope>");
             string message = messageBuilder.ToString();
 
             protoLogger.Debug("Constructed SAML request:{0}{1}", Environment.NewLine, message);
-            
+
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create(validationUrl);
             req.Method = "POST";
             req.ContentType = "text/xml";
             req.ContentLength = Encoding.UTF8.GetByteCount(message);
-            req.CookieContainer = new CookieContainer();                
-            req.Headers.Add("SOAPAction", "http://www.oasis-open.org/committees/security");                
+            req.CookieContainer = new CookieContainer();
+            req.Headers.Add("SOAPAction", "http://www.oasis-open.org/committees/security");
             req.CachePolicy = new RequestCachePolicy(RequestCacheLevel.NoCacheNoStore);
-           
+
             protoLogger.Debug("Request URI: " + req.RequestUri);
             protoLogger.Debug("Request headers: " + req.Headers);
 
