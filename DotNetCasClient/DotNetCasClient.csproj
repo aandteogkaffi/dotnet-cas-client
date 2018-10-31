@@ -1,44 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{883A296E-C898-4D1F-9ED9-DE7569DEFB3D}</ProjectGuid>
+    <ProjectGuid>{17D13BE1-12B7-4E8D-9305-C040FBAD17C6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DotNetCasClient</RootNamespace>
     <AssemblyName>DotNetCasClient</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>bin\Debug\DotNetCasClient.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -47,16 +29,16 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>bin\Release\DotNetCasClient.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
-    <Reference Include="System.Drawing" />
+    <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
-    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -68,6 +50,7 @@
     <Compile Include="Configuration\CasConfigurationException.cs" />
     <Compile Include="GatewayStatus.cs" />
     <Compile Include="Logging\Category.cs" />
+    <Compile Include="Logging\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\Assertion.cs" />
     <Compile Include="Security\AssertionRoleProvider.cs" />
@@ -84,21 +67,14 @@
     <Compile Include="Utils\EnhancedUriBuilder.cs" />
     <Compile Include="Utils\HttpUtil.cs" />
     <Compile Include="Utils\RequestEvaluator.cs" />
-    <Compile Include="Logging\Logger.cs" />
     <Compile Include="Utils\UrlUtil.cs" />
-    <Compile Include="Validation\Schema\Cas20\ClearPass\ClearPassFailure.cs" />
-    <Compile Include="Validation\Schema\Cas20\ClearPass\ClearPassResponse.cs" />
-    <Compile Include="Validation\Schema\Cas20\ClearPass\ClearPassSuccess.cs" />
-    <Compile Include="Validation\TicketValidator\AbstractCasProtocolTicketValidator.cs" />
-    <Compile Include="Validation\TicketValidator\AbstractUrlTicketValidator.cs" />
-    <Compile Include="Validation\TicketValidator\Cas10TicketValidator.cs" />
-    <Compile Include="Validation\TicketValidator\Cas20ServiceTicketValidator.cs" />
     <Compile Include="Validation\CasSaml11Response.cs" />
-    <Compile Include="Validation\TicketValidator\ITicketValidator.cs" />
-    <Compile Include="Validation\TicketValidator\Saml11TicketValidator.cs" />
     <Compile Include="Validation\SamlUtils.cs" />
     <Compile Include="Validation\Schema\Cas20\AuthenticationFailure.cs" />
     <Compile Include="Validation\Schema\Cas20\AuthenticationSuccess.cs" />
+    <Compile Include="Validation\Schema\Cas20\ClearPass\ClearPassFailure.cs" />
+    <Compile Include="Validation\Schema\Cas20\ClearPass\ClearPassResponse.cs" />
+    <Compile Include="Validation\Schema\Cas20\ClearPass\ClearPassSuccess.cs" />
     <Compile Include="Validation\Schema\Cas20\ProxyFailure.cs" />
     <Compile Include="Validation\Schema\Cas20\ProxySuccess.cs" />
     <Compile Include="Validation\Schema\Cas20\ServiceResponse.cs" />
@@ -187,6 +163,7 @@
     <Compile Include="Validation\Schema\Saml20\Protocol\Extensions\ExtensionsType.cs" />
     <Compile Include="Validation\Schema\Saml20\Protocol\IdpEntryType.cs" />
     <Compile Include="Validation\Schema\Saml20\Protocol\IdpListType.cs" />
+    <Compile Include="Validation\Schema\Saml20\Protocol\RequestedAuthnContextType.cs" />
     <Compile Include="Validation\Schema\Saml20\Protocol\Request\ArtifactResolveType.cs" />
     <Compile Include="Validation\Schema\Saml20\Protocol\Request\AssertionIdRequestType.cs" />
     <Compile Include="Validation\Schema\Saml20\Protocol\Request\AuthnRequestType.cs" />
@@ -195,7 +172,6 @@
     <Compile Include="Validation\Schema\Saml20\Protocol\Request\NameIdMappingRequestType.cs" />
     <Compile Include="Validation\Schema\Saml20\Protocol\Request\RequestAbstractType.cs" />
     <Compile Include="Validation\Schema\Saml20\Protocol\Request\RequestType.cs" />
-    <Compile Include="Validation\Schema\Saml20\Protocol\RequestedAuthnContextType.cs" />
     <Compile Include="Validation\Schema\Saml20\Protocol\Response\ResponseType.cs" />
     <Compile Include="Validation\Schema\Saml20\Protocol\ScopingType.cs" />
     <Compile Include="Validation\Schema\Saml20\Protocol\StatusCodeType.cs" />
@@ -251,28 +227,15 @@
     <Compile Include="Validation\Schema\XmlDsig\X509DataType.cs" />
     <Compile Include="Validation\Schema\XmlDsig\X509IssuerSerialType.cs" />
     <Compile Include="Validation\TicketValidationException.cs" />
+    <Compile Include="Validation\TicketValidator\AbstractCasProtocolTicketValidator.cs" />
+    <Compile Include="Validation\TicketValidator\AbstractUrlTicketValidator.cs" />
+    <Compile Include="Validation\TicketValidator\Cas10TicketValidator.cs" />
+    <Compile Include="Validation\TicketValidator\Cas20ServiceTicketValidator.cs" />
+    <Compile Include="Validation\TicketValidator\ITicketValidator.cs" />
+    <Compile Include="Validation\TicketValidator\Saml11TicketValidator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
+    <None Include="DotNetCasClient.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
