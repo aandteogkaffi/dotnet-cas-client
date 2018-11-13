@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{17D13BE1-12B7-4E8D-9305-C040FBAD17C6}</ProjectGuid>
+    <ProjectGuid>{883A296E-C898-4D1F-9ED9-DE7569DEFB3D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DotNetCasClient</RootNamespace>
